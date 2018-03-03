@@ -9,9 +9,8 @@ class Option extends Component {
         this.saveOption = this.saveOption.bind(this);
     }
 
-    componentWillMount() {
-        this.setState({value: this.props.value || ""});
-        console.log("===>", this.props.value);
+    componentWillReceiveProps(nextProps) {
+        this.setState({value: nextProps.value || ""});
     }
 
     setOption(e) {

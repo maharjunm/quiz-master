@@ -22,7 +22,8 @@ class App extends Component {
         let options = Object.assign(this.state.questionOptions, []);
         let index = options.findIndex(option => option.number === number);
         options[index] = {value: value, number: number};
-        this.setState({optionValue: value, questionOptions: options});
+        this.setState({questionOptions: options});
+        this.setState({optionValue: value, selectedQuestion: this.state.selectedQuestion});
     }
 
     deleteSelectedQuestion() {
@@ -77,6 +78,8 @@ class App extends Component {
 
     getOptionForSelectedQuestion() {
         let options = [];
+        console.log("Before rendering");
+        console.log(this.state.questionOptions);
         this.state.questionOptions.map((option, index) => {
             options.push(
                 <Option setOptionsForSelectedQuestion={this.setOption} value={option.value}
@@ -106,6 +109,7 @@ class App extends Component {
             options: options
         };
         questions[index] = updatedQuestion;
+        console.log(this.state.questionOptions);
         this.setState({questions: questions, selectedQuestion: updatedQuestion, questionOptions: options});
     }
 
@@ -116,10 +120,9 @@ class App extends Component {
     selectedQuestion() {
         return this.state.selectedQuestion && this.state.selectedQuestion.number ?
             <div>
-                <span>Design Question</span>
-
-                Question : <input type="text" value={this.state.questionValue} onChange={this.updateQuestionValue}/>
-                Options:
+                <p>Design Question</p>
+                <p>Question : <input type="text" value={this.state.questionValue} onChange={this.updateQuestionValue}/> </p>
+                <p>Options: </p>
                 {this.getOptionForSelectedQuestion()}
                 <button onClick={this.addOptions}>Add</button>
                 <button onClick={this.deleteLastOption}>Delete</button>
@@ -129,10 +132,10 @@ class App extends Component {
 
     render() {
         return (
-            <div>
+            <div className="full_question" >
                 <div>
                     <div>
-                        Questions
+                        <p>Questions</p>
                         {this.getAllQuestions()}
                         <button onClick={this.addQuestion}>Add Question</button>
                         <button onClick={this.deleteSelectedQuestion}>Delete Question</button>
